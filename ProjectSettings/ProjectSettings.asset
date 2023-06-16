@@ -807,7 +807,7 @@ PlayerSettings:
   webGLDecompressionFallback: 0
   webGLPowerPreference: 2
   scriptingDefineSymbols:
-    Android: REQUESTS_ENABLE_
+    Android: REQUESTS_ENABLE
   additionalCompilerArguments: {}
   platformArchitecture: {}
   scriptingBackend: {}

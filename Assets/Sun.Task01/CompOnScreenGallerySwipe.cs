@@ -3,13 +3,12 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem.Layouts;
 using UnityEngine.InputSystem.OnScreen;
-using UnityEngine.InputSystem.UI;
 
 namespace Assets.Sun.Task01
 {
 	[RequireComponent(typeof(CompViewGalleryContent))]
 	// ReSharper disable once UnusedType.Global
-	public class CompOnScreenGallerySwipe : OnScreenControl, IPointerMoveHandler, IPointerDownHandler, IPointerUpHandler
+	public class CompOnScreenGallerySwipe : OnScreenControl, IPointerMoveHandler
 	{
 		private CompViewGalleryContent _control;
 		private Vector2 _lastPosition;
@@ -31,8 +30,6 @@ namespace Assets.Sun.Task01
 			var delta = _lastPosition - eventData.position;
 			var deltaNorm = _control.GetStepNorm(delta.y);
 			_lastPosition = eventData.position;
-
-			var ext = eventData as ExtendedPointerEventData;
 
 			// the solution (input system) does not behave as expected, so i cannot just pick it and use
 			// so i need to waste my time to debug and study.. and to make bicycles
@@ -65,10 +62,7 @@ namespace Assets.Sun.Task01
 					_control.Scheduler.Schedule(deltaNorm, _control.TaskScrollUp);
 					//_control.TaskScrollUp(deltaNorm).MoveNext();
 				}
-
 			}
-
-			ext.Use();
 		}
 
 		private bool IsLmbHold()
@@ -103,25 +97,6 @@ namespace Assets.Sun.Task01
 			return
 				Input.touches.Length > 0 &&
 				Input.touches[0].phase is TouchPhase.Moved;
-		}
-
-		public void OnPointerDown(PointerEventData eventData)
-		{
-			// useless for touches: not guaranty to be called
-			//! even double enter on the same interval
-
-			"-- <color=yellow>scroll</color>: down".Log();
-
-			eventData.Use();
-		}
-
-		public void OnPointerUp(PointerEventData eventData)
-		{
-			// useless for touches: not guaranty to be called
-
-			"-- <color=yellow>scroll</color>: up".Log();
-
-			eventData.Use();
 		}
 	}
 }

@@ -13,6 +13,7 @@ namespace Assets.Sun.Task01
 		private void Awake()
 		{
 			Application.targetFrameRate = 60;
+			Screen.orientation = ScreenOrientation.Portrait;
 
 			Singleton<ServiceModel>.I.Reset();
 			Singleton<ServiceUI>.I.Reset();

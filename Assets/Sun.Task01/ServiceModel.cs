@@ -65,6 +65,7 @@ namespace Assets.Sun.Task01
 				return;
 			}
 
+			// have to be done by delayed task with sorted execution queue, now: on demand by gallery widget request
 			if(DateTime.UtcNow - model.RequestSent < TimeSpan.FromSeconds(3d))
 			{
 				return;
@@ -72,6 +73,7 @@ namespace Assets.Sun.Task01
 
 			model.Request = UnityWebRequest.Get(model.UriResource);
 			model.Request.SendWebRequest();
+			model.RequestSent = DateTime.UtcNow;
 
 			EventsModelUpdate.Enqueue(new CmdModelRequestUpdated { IdModel = model.IdModel });
 			#endif
@@ -131,6 +133,7 @@ namespace Assets.Sun.Task01
 
 					model.LoadTextureFromRequest();
 					model.Request = null;
+					model.IsRequestSuccessful = true;
 				}
 				else
 				{
@@ -138,6 +141,7 @@ namespace Assets.Sun.Task01
 
 					model.LoadTextureError();
 					model.Request = null;
+					model.IsRequestSuccessful = false;
 				}
 			}
 

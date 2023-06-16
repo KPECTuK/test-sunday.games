@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 namespace Assets.Sun.Task01
 {
-	[RequireComponent(typeof(Button))]
+	[RequireComponent(typeof(CompOnScreenGalleryButton))]
 	// ReSharper disable once UnusedType.Global
 	public class CompViewGalleryContentItem : MonoBehaviour
 	{
@@ -73,19 +73,6 @@ namespace Assets.Sun.Task01
 		public void OnModelUpdated()
 		{
 			Image.texture = Model.Texture;
-		}
-
-		private void OnClick()
-		{
-			Singleton<ServiceUI>.I.EventsViewPreview.Enqueue(new CmdViewPreviewInitialize { IdModel = Model.IdModel, });
-			Singleton<ServiceUI>.I.EventsViewScreens.Enqueue(new CmdViewScreenChange { NameScreen = ServiceUI.SCREEN_PREVIEW_S, });
-		}
-
-		// ReSharper disable once UnusedMember.Local
-		private void Awake()
-		{
-			var button = GetComponent<Button>();
-			button.onClick.AddListener(OnClick);
 		}
 
 		// ReSharper disable once UnusedMember.Global

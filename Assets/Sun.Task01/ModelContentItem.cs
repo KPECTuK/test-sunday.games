@@ -20,10 +20,13 @@ namespace Assets.Sun.Task01
 		{
 			"set from request".Log();
 
-			Texture = new Texture2D(100, 100, GraphicsFormat.B8G8R8A8_SRGB, 0, TextureCreationFlags.None);
+			// provide metadata to decode image resolution
+			Texture = new Texture2D(256, 256, GraphicsFormat.B8G8R8A8_SRGB, 0, TextureCreationFlags.None);
 			Texture.LoadImage(Request.downloadHandler.data);
 			Texture.Apply(false);
 			IsSharedTexture = false;
+
+			Request.GetResponseHeaders().ToText($"response headers: {Request.url}", _=> $"'{_.Key, 20}': {_.Value}").Log();
 		}
 
 		public void LoadTextureError()

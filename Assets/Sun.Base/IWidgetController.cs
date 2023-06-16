@@ -1,5 +1,6 @@
 namespace Assets.Sun.Base
 {
+	//? collect all the branch to enable\disable
 	public interface IWidgetController
 	{
 		void OnWidgetEnable();

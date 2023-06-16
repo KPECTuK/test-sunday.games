@@ -33,8 +33,6 @@ namespace Assets.Sun.Task01
 		{
 			"content enabled".Log();
 
-			SetScheduler<SchedulerViewContentScroll>();
-
 			Scheduler.PassThrough.Schedule(TaskWidgetsInitialize);
 		}
 
@@ -572,6 +570,12 @@ namespace Assets.Sun.Task01
 			_windowRight = windowRight;
 
 			yield break;
+		}
+
+		// ReSharper disable once UnusedMember.Local
+		private void Awake()
+		{
+			SetScheduler<SchedulerViewContentScroll>();
 		}
 
 		// ReSharper disable once UnusedMember.Local

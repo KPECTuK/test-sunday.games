@@ -6,25 +6,29 @@ using UnityEngine.InputSystem.OnScreen;
 
 namespace Assets.Sun.Task01
 {
+	[RequireComponent(typeof(CompViewGalleryContentItem))]
 	// ReSharper disable once UnusedType.Global
-	public class CompOnScreenGalleryButton : OnScreenControl, IPointerDownHandler, IPointerUpHandler
+	public class CompOnScreenGalleryButton : OnScreenControl, IPointerClickHandler
 	{
-		public void OnPointerDown(PointerEventData data)
-		{
-			SendValueToControl(1.0f);
-
-			"-- <color=yellow>button</color>: down".Log();
-		}
-
-		public void OnPointerUp(PointerEventData data)
-		{
-			SendValueToControl(0.0f);
-
-			"-- <color=yellow>button</color>: up".Log();
-		}
-
 		[InputControl(layout = "Button")] [SerializeField] private string _controlPath;
 
 		protected override string controlPathInternal { get => _controlPath; set => _controlPath = value; }
+
+		public void OnPointerClick(PointerEventData eventData)
+		{
+			if(GetComponentInParent<CompViewGalleryContent>().Scheduler is SchedulerViewContentScroll { IsScrolling: false })
+			{
+				var component = GetComponent<CompViewGalleryContentItem>();
+				if(component.Model.IsRequestSuccessful)
+				{
+					Singleton<ServiceUI>.I.EventsViewPreview.Enqueue(new CmdViewPreviewUpdate { IdModel = component.Model.IdModel, });
+					Singleton<ServiceUI>.I.EventsViewScreens.Enqueue(new CmdViewScreenChange { NameScreen = ServiceUI.SCREEN_PREVIEW_S, });
+				}
+				else
+				{
+					"trying to preview: request unsuccessful or in progress..".LogWarning();
+				}
+			}
+		}
 	}
 }
