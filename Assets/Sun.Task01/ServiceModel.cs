@@ -7,7 +7,7 @@ namespace Assets.Sun.Task01
 {
 	public class ServiceModel : IService
 	{
-		public const int ITEMS_TOTAL = 17;
+		public const int ITEMS_TOTAL = 67;
 
 		public readonly Queue<ICommand<CompViewGalleryContent>> EventsModelUpdate = new();
 

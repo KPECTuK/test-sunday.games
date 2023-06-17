@@ -16,6 +16,7 @@ namespace Assets.Sun.Task01
 
 		public void OnPointerClick(PointerEventData eventData)
 		{
+			// TODO: use gallery scheduler\queue as a target instead of casting: TL; TI;
 			if(GetComponentInParent<CompViewGalleryContent>().Scheduler is SchedulerViewContentScroll { IsScrolling: false })
 			{
 				var component = GetComponent<CompViewGalleryContentItem>();
